@@ -34,9 +34,37 @@ public class MainActivity2 extends AppCompatActivity {
             }
         });
 
+        //========================================================================================
+        double version = 0.1;
+        String url;
+        url = "http://ftl92.esy.es/index.php/api/findbygroup";
+        String [] fields = {
+                "group:"+gr+";"
+                // ,"data:12.09.2018;"
+        };
+
+        ConnectionFactory connection = new ConnectionFactory(fields,url,version);
+        String response = connection.buildConnection();
+        System.out.println(gr+"-->>>\n"+response);
+        //System.out.println(new Parser().getParaList(response));
+        //----------------------------------------------------------------------------------------
+
+
+
+
+
         myTabl(gr);
     }
 void myTabl(String gr){
+
+
+
+
+
+
+
+
+
     TableLayout tableLayout = new TableLayout(this);
     tableLayout.setLayoutParams(new TableLayout.LayoutParams(
             ViewGroup.LayoutParams.FILL_PARENT,
