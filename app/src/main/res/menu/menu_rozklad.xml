@@ -1,0 +1,95 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.serg.rozklad.Rozklad">
+    <item
+        android:id="@+id/act11A"
+        android:orderInCategory="100"
+        android:title="11А"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act11B"
+        android:orderInCategory="100"
+        android:title="11Б"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act12A"
+        android:orderInCategory="100"
+        android:title="12А"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act12B"
+        android:orderInCategory="100"
+        android:title="12Б"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act13A"
+        android:orderInCategory="100"
+        android:title="13А"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act13B"
+        android:orderInCategory="100"
+        android:title="13Б"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act21A"
+        android:orderInCategory="100"
+        android:title="21А"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act21B"
+        android:orderInCategory="100"
+        android:title="21Б"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act22A"
+        android:orderInCategory="100"
+        android:title="22А"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act22B"
+        android:orderInCategory="100"
+        android:title="22Б"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act23A"
+        android:orderInCategory="100"
+        android:title="23А"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act23B"
+        android:orderInCategory="100"
+        android:title="23Б"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act31A"
+        android:orderInCategory="100"
+        android:title="31А"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act31B"
+        android:orderInCategory="100"
+        android:title="31Б"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act32A"
+        android:orderInCategory="100"
+        android:title="32А"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act32B"
+        android:orderInCategory="100"
+        android:title="32Б"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act33A"
+        android:orderInCategory="100"
+        android:title="33А"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/act33B"
+        android:orderInCategory="100"
+        android:title="33Б"
+        app:showAsAction="never" />
+</menu>
