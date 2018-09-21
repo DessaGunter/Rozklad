@@ -1,6 +1,12 @@
 package com.example.serg.rozklad;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
+
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -9,7 +15,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConnectionFactory {
+public class ConnectionFactory extends AsyncTask<Void,Void,Void> {
     private double API_VERSION = 0;
     private String API = "";
     private String METHOD = "POST";
@@ -31,6 +37,7 @@ public class ConnectionFactory {
             }
         }
     }
+
     public String buildConnection(){
         StringBuilder content = new StringBuilder();
         if(!this.getEndpoints().equalsIgnoreCase("")&& !this.getEndpoints().isEmpty()){
@@ -63,7 +70,17 @@ public class ConnectionFactory {
         //System.out.println("Endpoints not is null");
         return null;
     }
-
+    @Override
+    protected Void doInBackground(Void... voids) {
+        try {System.err.println("Try connect");
+            finalConnection.connect();
+            System.err.println("Connected");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error conection");
+        }
+        return null;
+    }
     private InputStream readWithAccess(URL url,String data){
         try{
             byte []out = data.toString().getBytes("utf-8");
@@ -71,15 +88,17 @@ public class ConnectionFactory {
             finalConnection.setRequestMethod("POST");
             finalConnection.setRequestProperty("Content-Length", String.valueOf(out.length));
             finalConnection.setDoOutput(true);
+            finalConnection.setDoInput(true);
             finalConnection.setInstanceFollowRedirects(false);
+            //finalConnection.setConnectTimeout(2000);
+            finalConnection.setReadTimeout(10000);
             finalConnection.addRequestProperty("User-Agent",USER_AGENT);
             finalConnection.addRequestProperty("Content-Type",TYPE);
             finalConnection.setRequestProperty("charset", "utf-8");
-            System.err.println("Try connect");
 
+            doInBackground();
 
-            finalConnection.connect();
-            try{
+            try{System.err.println("Connected");
                 OutputStream os = finalConnection.getOutputStream();
                 os.write(out);
             }catch (Exception e){
@@ -113,4 +132,6 @@ public class ConnectionFactory {
     public void setSubmissionType(String type){
         this.TYPE = type;
     }
+
+
 }

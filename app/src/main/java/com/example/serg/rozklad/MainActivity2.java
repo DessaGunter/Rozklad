@@ -42,8 +42,8 @@ public class MainActivity2 extends AppCompatActivity {
                 "group:"+gr+";"
                 // ,"data:12.09.2018;"
         };
-        System.out.println("-->>"+fields.toString());
         ConnectionFactory connection = new ConnectionFactory(fields,url,version);
+       // System.out.println("-----=>");
         String response = connection.buildConnection();
         System.out.println(gr+"-->>>\n"+response);
         //System.out.println(new Parser().getParaList(response));
