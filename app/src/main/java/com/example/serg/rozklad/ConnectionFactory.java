@@ -67,21 +67,13 @@ public class ConnectionFactory {
     private InputStream readWithAccess(URL url,String data){
         try{
             byte []out = data.toString().getBytes("utf-8");
-            System.err.println("01");
             finalConnection = (HttpURLConnection) url.openConnection();
-            System.err.println("02");
             finalConnection.setRequestMethod("POST");
-            System.err.println("03");
             finalConnection.setRequestProperty("Content-Length", String.valueOf(out.length));
-            System.err.println("04");
             finalConnection.setDoOutput(true);
-            System.err.println("05");
             finalConnection.setInstanceFollowRedirects(false);
-            System.err.println("06");
             finalConnection.addRequestProperty("User-Agent",USER_AGENT);
-            System.err.println("07");
             finalConnection.addRequestProperty("Content-Type",TYPE);
-            System.err.println("08");
             finalConnection.setRequestProperty("charset", "utf-8");
             System.err.println("Try connect");
 
