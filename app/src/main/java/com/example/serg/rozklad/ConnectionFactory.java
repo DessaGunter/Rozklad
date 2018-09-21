@@ -84,6 +84,8 @@ public class ConnectionFactory {
             System.err.println("08");
             finalConnection.setRequestProperty("charset", "utf-8");
             System.err.println("Try connect");
+
+
             finalConnection.connect();
             try{
                 OutputStream os = finalConnection.getOutputStream();
