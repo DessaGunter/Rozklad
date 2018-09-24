@@ -13,6 +13,18 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.HashMap;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MainActivity2 extends AppCompatActivity {
     Button btnOk;
     @Override
@@ -35,18 +47,42 @@ public class MainActivity2 extends AppCompatActivity {
         });
 
         //========================================================================================
-        double version = 0.1;
-        String url;
-        url = "http://ftl92.esy.es/index.php/api/findbygroup";
-        String [] fields = {
-                "group:"+gr+";"
-                // ,"data:12.09.2018;"
-        };
-        ConnectionFactory connection = new ConnectionFactory(fields,url,version);
-       // System.out.println("-----=>");
-        String response = connection.buildConnection();
-        System.out.println(gr+"-->>>\n"+response);
-        //System.out.println(new Parser().getParaList(response));
+        final Gson gson = new GsonBuilder().create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://ftl92.esy.es/index.php/") // Адрес сервера
+                .addConverterFactory(GsonConverterFactory.create()) // говорим ретрофиту что для сериализации необходимо использовать GSON
+                .build();
+
+        HashMap<String, String> postDataParams = new HashMap<String, String>();
+        postDataParams.put("group", gr);
+
+        Server service = retrofit.create(Server.class);
+        Call<List<FindByGroupGesult>> call = service.findbygroup(postDataParams);
+        call.enqueue(new Callback<List<FindByGroupGesult>>() {
+            @Override
+            public void onResponse(Call<List<FindByGroupGesult>> call, Response<List<FindByGroupGesult>> response) {
+                if (response.isSuccessful()) {
+                    System.out.println("Все ОК");// запрос выполнился успешно, сервер вернул Status 200
+                    List<FindByGroupGesult> rezList =response.body();
+            for (FindByGroupGesult x:rezList)
+                    System.out.println("--->>>>"+x+"\n");
+
+
+
+
+                } else {
+                    System.out.println("Помилка сервера");// сервер вернул ошибку
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<FindByGroupGesult>> call, Throwable t) {
+                System.out.println("Помилка запиту");// ошибка во время выполнения запроса
+            }
+        });
+
+
         //----------------------------------------------------------------------------------------
 
 
@@ -56,15 +92,6 @@ public class MainActivity2 extends AppCompatActivity {
         myTabl(gr);
     }
 void myTabl(String gr){
-
-
-
-
-
-
-
-
-
     TableLayout tableLayout = new TableLayout(this);
     tableLayout.setLayoutParams(new TableLayout.LayoutParams(
             ViewGroup.LayoutParams.FILL_PARENT,
