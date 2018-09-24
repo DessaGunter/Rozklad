@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -27,6 +28,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity2 extends AppCompatActivity {
     Button btnOk;
+
+    List<FindByGroupGesult> rezList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,13 +67,8 @@ public class MainActivity2 extends AppCompatActivity {
             public void onResponse(Call<List<FindByGroupGesult>> call, Response<List<FindByGroupGesult>> response) {
                 if (response.isSuccessful()) {
                     System.out.println("Все ОК");// запрос выполнился успешно, сервер вернул Status 200
-                    List<FindByGroupGesult> rezList =response.body();
-            for (FindByGroupGesult x:rezList)
-                    System.out.println("--->>>>"+x+"\n");
-
-
-
-
+                    rezList =response.body();
+                    myTabl();
                 } else {
                     System.out.println("Помилка сервера");// сервер вернул ошибку
                 }
@@ -84,63 +82,41 @@ public class MainActivity2 extends AppCompatActivity {
 
 
         //----------------------------------------------------------------------------------------
+ }
 
 
+void myTabl(){
 
 
-
-        myTabl(gr);
-    }
-void myTabl(String gr){
     TableLayout tableLayout = new TableLayout(this);
     tableLayout.setLayoutParams(new TableLayout.LayoutParams(
             ViewGroup.LayoutParams.FILL_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
     ));
     tableLayout.setStretchAllColumns(true);
-
-    TextView textView1 = new TextView(this);
-    textView1.setText(gr);
-    TextView textView2 = new TextView(this);
-    textView2.setText("Column 2");
-    TextView textView3 = new TextView(this);
-    textView3.setText("Column 3");
-
-    TextView textView4 = new TextView(this);
-    textView4.setText(gr);
-    TextView textView5 = new TextView(this);
-    textView5.setText("Column 5");
-    TextView textView6 = new TextView(this);
-    textView6.setText("Column 6");
-
-    TextView textView7 = new TextView(this);
-    textView7.setText(gr);
-    TextView textView8 = new TextView(this);
-    textView8.setText("Column 8");
-    TextView textView9 = new TextView(this);
-    textView9.setText("Column 9");
-
+    TextView textView1 = new TextView(this); textView1.setText("# / Ауд");
+    TextView textView2 = new TextView(this); textView2.setText("Предмет\nВикладач");
     TableRow tableRow1 = new TableRow(this);
-    TableRow tableRow2 = new TableRow(this);
-    TableRow tableRow3 = new TableRow(this);
-
+    tableRow1.setBackgroundColor(0xFFFF0000);
     tableRow1.addView(textView1);
     tableRow1.addView(textView2);
-    tableRow1.addView(textView3);
-
-    tableRow2.setBackgroundColor(0xffcccccc);
-    tableRow2.addView(textView4);
-    tableRow2.addView(textView5);
-    tableRow2.addView(textView6);
-
-    tableRow3.addView(textView7);
-    tableRow3.addView(textView8);
-    tableRow3.addView(textView9);
 
     tableLayout.addView(tableRow1);
-    tableLayout.addView(tableRow2);
-    tableLayout.addView(tableRow3);
+
+    for (FindByGroupGesult x:rezList){
+    TableRow tableRow01 = new TableRow(this);
+    TableRow tableRow02 = new TableRow(this);
+    TextView textView01 = new TextView(this);   textView01.setText(x.getN_para());
+    TextView textView02 = new TextView(this);   textView02.setText(x.getPredmet());
+    TextView textView03 = new TextView(this);   textView03.setText(x.getAud());
+    TextView textView04 = new TextView(this);   textView04.setText(x.getTeach());
+    tableRow01.addView(textView01);    tableRow01.addView(textView02);
+    tableRow02.addView(textView03);    tableRow02.addView(textView04);
+    tableLayout.addView(tableRow01); tableLayout.addView(tableRow02);
+    tableRow01.setBackgroundColor(0xffcccccc);
+        //ScrollView scrV = new ScrollView();
+        tableLayout.setScrollContainer(true);
     setContentView(tableLayout);
 }
-}
+}}
 
