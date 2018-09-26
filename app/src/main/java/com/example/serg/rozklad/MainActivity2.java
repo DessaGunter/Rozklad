@@ -1,11 +1,14 @@
 package com.example.serg.rozklad;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +30,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class MainActivity2 extends AppCompatActivity {
     Button btnOk;
 
@@ -84,39 +89,53 @@ public class MainActivity2 extends AppCompatActivity {
         //----------------------------------------------------------------------------------------
  }
 
+String dt[]={"Понеділок","Вівторок","Середа","Четвер","Пятниця","Субота","Неділя","Понеділок"};
+    int numberWeek = Calendar.getInstance().getWeekYear();
+    TableLayout table = (TableLayout)findViewById(R.id.table);
+    TableRow row = (TableRow)findViewById(R.id.row);
 
-void myTabl(){
+    void myTabl() {
 
 
-    TableLayout tableLayout = new TableLayout(this);
-    tableLayout.setLayoutParams(new TableLayout.LayoutParams(
-            ViewGroup.LayoutParams.FILL_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-    ));
-    tableLayout.setStretchAllColumns(true);
-    TextView textView1 = new TextView(this); textView1.setText("# / Ауд");
-    TextView textView2 = new TextView(this); textView2.setText("Предмет\nВикладач");
-    TableRow tableRow1 = new TableRow(this);
-    tableRow1.setBackgroundColor(0xFFFF0000);
-    tableRow1.addView(textView1);
-    tableRow1.addView(textView2);
+// get table row index android.
+        int nIndex = table.indexOfChild(row);
+        table.removeView(row); // invisible and height == 0
+// add row into same place
+        table.addView(row, nIndex); // visible
 
-    tableLayout.addView(tableRow1);
+// add row into certain position
+        table.addView(row, 3); // visible
 
-    for (FindByGroupGesult x:rezList){
-    TableRow tableRow01 = new TableRow(this);
-    TableRow tableRow02 = new TableRow(this);
-    TextView textView01 = new TextView(this);   textView01.setText(x.getN_para());
-    TextView textView02 = new TextView(this);   textView02.setText(x.getPredmet());
-    TextView textView03 = new TextView(this);   textView03.setText(x.getAud());
-    TextView textView04 = new TextView(this);   textView04.setText(x.getTeach());
-    tableRow01.addView(textView01);    tableRow01.addView(textView02);
-    tableRow02.addView(textView03);    tableRow02.addView(textView04);
-    tableLayout.addView(tableRow01); tableLayout.addView(tableRow02);
-    tableRow01.setBackgroundColor(0xffcccccc);
-        //ScrollView scrV = new ScrollView();
-        tableLayout.setScrollContainer(true);
-    setContentView(tableLayout);
+// create new TableRow dynamically
+        TableRow tr = new TableRow(this);
+        tr.setLayoutParams(new TableRow.LayoutParams(
+                TableRow.LayoutParams.FILL_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+    }
+// create own function for append TableRow
+    private void appendRow(TableLayout table) {
+        TableRow row = new TableRow(this);
+
+        TextView hLabel = new TextView(this);
+        hLabel.setText("Some text");
+        hLabel.setPadding(3, 3, 3, 3);
+
+        TextView hNextLabel = new TextView(this);
+        hNextLabel.setText("Next text");
+        hNextLabel.setPadding(3, 3, 3, 3);
+        hNextLabel.setGravity(Gravity.RIGHT | Gravity.TOP);
+
+        row.addView(hLabel, new TableRow.LayoutParams(1));
+        row.addView(hNextLabel, new TableRow.LayoutParams());
+
+        table.addView(row, new TableLayout.LayoutParams());
+    }
+
+
+
 }
-}}
+
+
+
+
 
